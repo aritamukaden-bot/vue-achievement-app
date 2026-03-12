@@ -2,15 +2,19 @@
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import { acitems } from '@/data/acitems'
-import { userAchievements } from '@/data/userAchievements'
+import { userAchievements as defaultAchievements } from '@/data/userAchievements'
 
 const route = useRoute()
 const id = Number(route.params.id)
 
 const acitem = acitems.find((item) => item.id === id)
 
+/* localStorage から読み込む */
+const savedAchievements = localStorage.getItem('achievements')
+const achievements = savedAchievements ? JSON.parse(savedAchievements) : defaultAchievements
+
 /*上はidの引き渡し*/
-const userAchievement = userAchievements.find((item) => item.achievementId === id)
+const userAchievement = achievements.find((item) => item.achievementId === id)
 const date = ref(userAchievement ? userAchievement.date : '')
 const memo = ref(userAchievement ? userAchievement.memo : '')
 const something = ref(userAchievement ? userAchievement.photo : '')
@@ -30,7 +34,7 @@ function saveAchievement() {
   userAchievement.photo = something.value
   userAchievement.unlocked = true
 
-  console.log(userAchievement)
+  localStorage.setItem('achievements', JSON.stringify(achievements))
   alert('実績解除：' + acitem.name)
 }
 </script>
