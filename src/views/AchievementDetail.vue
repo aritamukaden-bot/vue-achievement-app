@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import { acitems } from '@/data/acitems'
 import { userAchievements as defaultAchievements } from '@/data/userAchievements'
+import AchievementCard from '@/components/AchievementCard.vue'
 
 const route = useRoute()
 const id = Number(route.params.id)
@@ -48,4 +49,5 @@ function saveAchievement() {
     <input type="text" v-model="memo" />
     <button @click="saveAchievement">保存</button>
   </div>
+  <AchievementCard :achievement="acitem" />
 </template>
