@@ -1,18 +1,19 @@
 <script setup>
-import { useRoute } from 'vue-router'
-import { acitems } from '@/data/acitems'
+import { computed } from 'vue'
+
 import { userAchievements } from '@/data/userAchievements'
 
-const route = useRoute()
-const id = Number(route.params.id)
+const props = defineProps({
+  acitem: Object,
+})
 
-const acitem = acitems.find((item) => item.id === id)
-
-const userAchievement = userAchievements.find((item) => item.achievementId === id)
+const userAchievement = computed(() =>
+  userAchievements.find((item) => item.achievementId === props.acitem.id),
+)
 </script>
 
 <template>
   <div>
-    <p>{{ userAchievement?.unlocked ? '解除済み' : '未解除' }}</p>
+    <p>{{ userAchinement?.unlocked ? '解除済み' : '未解除' }}</p>
   </div>
 </template>
